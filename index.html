@@ -991,7 +991,7 @@
 // ================================================================
 //  KONFIGURASI — GANTI DENGAN URL GOOGLE APPS SCRIPT WEB APP
 // ================================================================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby48cqdvJnU9L7GayK8Gn_jzmSwfv7WH2WrhzAyZaCDuDUsZynZ7b74t5BOs21NOfjyGg/exec";
+const SCRIPT_URL = "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_WEB_APP";
 // Cara dapat URL ini: di Google Apps Script → Deploy → New deployment
 // → Web app → Execute as Me → Anyone can access → Deploy → copy URL
 
@@ -1003,16 +1003,71 @@ const TOTAL_STEPS = 6;
 const fotoData = { pkp: [], tek: [], avsec: [], san: [] };
 
 // ================================================================
-//  NAVIGASI
+//  NAVIGASI — Skip unit lain, hanya isi unit sendiri
 // ================================================================
+const STEP_UNIT_MAP = { 1: 'PKP-PK', 2: 'Teknisi', 3: 'Avsec', 4: 'Sanitasi' };
+
+function getSelectedUnit() { return document.getElementById('unit').value; }
+
+function isMyStep(step) {
+  const unit = getSelectedUnit();
+  if (!STEP_UNIT_MAP[step]) return true;
+  if (unit === 'Tata Usaha') return false;
+  return STEP_UNIT_MAP[step] === unit;
+}
+
+function _dummyImg() {
+  return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+}
+
+function autoFillSkippedUnits() {
+  const unit = getSelectedUnit();
+  if (unit !== 'PKP-PK' && unit !== '') {
+    const inp = document.querySelector('#list-pkp input');
+    if (inp && !inp.value) inp.value = 'Stand by';
+    if (fotoData.pkp.length === 0) fotoData.pkp.push({ name: 'standby', data: _dummyImg() });
+  }
+  if (unit !== 'Teknisi' && unit !== '') {
+    ['#list-listrik input','#list-bangland input','#list-a2b input'].forEach(sel => {
+      const inp = document.querySelector(sel);
+      if (inp && !inp.value) inp.value = 'Stand by';
+    });
+    if (fotoData.tek.length === 0) fotoData.tek.push({ name: 'standby', data: _dummyImg() });
+  }
+  if (unit !== 'Avsec' && unit !== '') {
+    const inp = document.querySelector('#list-avsec input');
+    if (inp && !inp.value) inp.value = 'Stand by';
+    if (fotoData.avsec.length === 0) fotoData.avsec.push({ name: 'standby', data: _dummyImg() });
+  }
+  if (unit !== 'Sanitasi' && unit !== '') {
+    const inp = document.querySelector('#list-sanitasi input');
+    if (inp && !inp.value) inp.value = 'Stand by';
+    if (fotoData.san.length === 0) fotoData.san.push({ name: 'standby', data: _dummyImg() });
+  }
+}
+
+function getNextStep(from) {
+  let next = from + 1;
+  while (next < 5 && !isMyStep(next)) next++;
+  return next;
+}
+
+function getPrevStep(from) {
+  let prev = from - 1;
+  while (prev > 0 && !isMyStep(prev)) prev--;
+  return prev;
+}
+
 function nextStep(from) {
   if (!validateStep(from)) return;
-  if (from === 4) buildSummary();
-  goToStep(from + 1);
+  if (from === 0) autoFillSkippedUnits();
+  const next = getNextStep(from);
+  if (next >= 5) { buildSummary(); goToStep(5); }
+  else goToStep(next);
 }
 
 function prevStep(from) {
-  goToStep(from - 1);
+  goToStep(getPrevStep(from));
 }
 
 function goToStep(step) {
