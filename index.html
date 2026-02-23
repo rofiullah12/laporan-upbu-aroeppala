@@ -8,1168 +8,410 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0D1B3E;
-    --navy-mid: #1B3A6B;
-    --navy-light: #2E5090;
-    --gold: #D4A017;
-    --gold-light: #F0C040;
-    --white: #FFFFFF;
-    --gray-50: #F8FAFC;
-    --gray-100: #F1F5F9;
-    --gray-200: #E2E8F0;
-    --gray-400: #94A3B8;
-    --gray-600: #475569;
-    --gray-800: #1E293B;
-    --green: #10B981;
-    --red: #EF4444;
+    --navy: #0D1B3E; --navy-mid: #1B3A6B; --navy-light: #2E5090;
+    --gold: #D4A017; --gold-light: #F0C040;
+    --white: #FFFFFF; --gray-50: #F8FAFC; --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0; --gray-400: #94A3B8; --gray-600: #475569;
+    --gray-800: #1E293B; --green: #10B981; --red: #EF4444;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 16px rgba(13,27,62,0.12);
-    --shadow-lg: 0 8px 32px rgba(13,27,62,0.18);
-    --radius: 16px;
-    --radius-sm: 10px;
+    --radius: 16px; --radius-sm: 10px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; padding-bottom: 40px; }
 
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-800);
-    min-height: 100vh;
-    padding-bottom: 40px;
-  }
-
-  /* ── HEADER ── */
   .app-header {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
-    padding: 20px 20px 28px;
-    position: relative;
-    overflow: hidden;
+    padding: 20px 20px 24px; position: relative; overflow: hidden;
   }
-  .app-header::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    background: rgba(212,160,23,0.12);
-  }
-  .app-header::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: 30%;
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.04);
-  }
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .header-logo {
-    width: 44px; height: 44px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.2);
-    flex-shrink: 0;
-  }
-  .header-title {
-    flex: 1;
-  }
-  .header-title h1 {
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1.3;
-    letter-spacing: -0.3px;
-  }
-  .header-title p {
-    font-size: 11px;
-    color: rgba(255,255,255,0.65);
-    margin-top: 2px;
-  }
-  .header-badge {
-    background: var(--gold);
-    color: var(--navy);
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
+  .app-header::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; border-radius:50%; background:rgba(212,160,23,0.12); }
+  .header-top { display:flex; align-items:center; gap:12px; }
+  .header-logo { width:44px; height:44px; background:rgba(255,255,255,0.15); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.2); flex-shrink:0; }
+  .header-title h1 { font-size:15px; font-weight:800; color:var(--white); line-height:1.3; }
+  .header-title p { font-size:11px; color:rgba(255,255,255,0.65); margin-top:2px; }
+  .header-badge { background:var(--gold); color:var(--navy); font-size:10px; font-weight:700; padding:4px 10px; border-radius:20px; white-space:nowrap; }
 
-  /* Progress bar */
-  .progress-bar-wrap {
-    background: rgba(255,255,255,0.15);
-    border-radius: 999px;
-    height: 6px;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
-    border-radius: 999px;
-    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
-    width: 0%;
-  }
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 6px;
-  }
-  .progress-label span {
-    font-size: 10px;
-    color: rgba(255,255,255,0.6);
-    font-family: 'DM Mono', monospace;
-  }
+  .main { padding: 0 16px; max-width: 540px; margin: 0 auto; }
 
-  /* ── MAIN CONTENT ── */
-  .main {
-    padding: 0 16px;
-    max-width: 540px;
-    margin: 0 auto;
-  }
+  .card { background:var(--white); border-radius:var(--radius); padding:20px; margin-top:16px; box-shadow:var(--shadow-sm); border:1px solid var(--gray-100); }
+  .card-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:2px solid var(--gray-100); }
+  .card-icon { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .card-icon.navy { background:rgba(13,27,62,0.08); }
+  .card-icon.gold { background:rgba(212,160,23,0.12); }
+  .card-title h2 { font-size:15px; font-weight:700; color:var(--navy); }
+  .card-title p { font-size:11px; color:var(--gray-400); margin-top:2px; }
 
-  /* ── STEP INDICATOR ── */
-  .steps-nav {
-    display: flex;
-    gap: 6px;
-    padding: 16px 0 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
+  .form-group { margin-bottom:16px; }
+  label { display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:6px; letter-spacing:0.3px; text-transform:uppercase; }
+  label .required { color:var(--red); margin-left:2px; }
+  label .optional { color:var(--gray-400); font-weight:400; text-transform:none; font-size:11px; margin-left:4px; }
+  input[type="text"], input[type="date"], textarea, select {
+    width:100%; padding:12px 14px; border:1.5px solid var(--gray-200); border-radius:var(--radius-sm);
+    font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:var(--gray-800);
+    background:var(--gray-50); transition:all 0.2s; outline:none; -webkit-appearance:none;
   }
-  .steps-nav::-webkit-scrollbar { display: none; }
-  .step-chip {
-    flex-shrink: 0;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 600;
-    border: 1.5px solid var(--gray-200);
-    background: var(--white);
-    color: var(--gray-400);
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .step-chip.active {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: var(--white);
-  }
-  .step-chip.done {
-    background: var(--green);
-    border-color: var(--green);
-    color: var(--white);
-  }
+  input:focus, textarea:focus, select:focus { border-color:var(--navy-mid); background:var(--white); box-shadow:0 0 0 3px rgba(27,58,107,0.08); }
+  textarea { resize:none; min-height:80px; line-height:1.5; }
+  select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
 
-  /* ── CARD ── */
-  .card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-top: 12px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--gray-100);
-    display: none;
-  }
-  .card.active { display: block; animation: slideIn 0.3s ease; }
+  .kegiatan-list { display:flex; flex-direction:column; gap:8px; }
+  .kegiatan-item { display:flex; gap:8px; align-items:flex-start; }
+  .kegiatan-num { width:28px; height:28px; border-radius:8px; background:var(--navy); color:var(--white); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:10px; }
+  .kegiatan-item input { flex:1; }
+  .add-kegiatan-btn { width:100%; padding:10px; border:1.5px dashed var(--gray-300); border-radius:var(--radius-sm); background:none; color:var(--navy-mid); font-size:13px; font-weight:600; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; transition:all 0.2s; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:6px; }
 
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  .foto-section { margin-top:20px; padding-top:16px; border-top:2px dashed var(--gray-200); }
+  .foto-label { font-size:12px; font-weight:600; color:var(--gray-600); letter-spacing:0.3px; text-transform:uppercase; margin-bottom:10px; display:block; }
+  .foto-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+  .foto-btn { padding:14px 10px; border-radius:var(--radius-sm); border:1.5px solid var(--gray-200); background:var(--white); cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:6px; transition:all 0.2s; font-family:'Plus Jakarta Sans',sans-serif; }
+  .foto-btn:active { transform:scale(0.97); }
+  .foto-btn .foto-btn-icon { font-size:24px; }
+  .foto-btn .foto-btn-text { font-size:11px; font-weight:600; color:var(--navy); }
+  .foto-btn.camera { border-color:var(--navy-mid); background:rgba(27,58,107,0.04); }
+  .foto-preview-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:4px; }
+  .foto-preview-item { position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden; background:var(--gray-100); border:1.5px solid var(--gray-200); }
+  .foto-preview-item img { width:100%; height:100%; object-fit:cover; }
+  .foto-remove { position:absolute; top:4px; right:4px; width:20px; height:20px; border-radius:50%; background:rgba(0,0,0,0.6); color:white; border:none; font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .foto-count { font-size:11px; color:var(--gray-400); margin-top:6px; }
+  .foto-count span { color:var(--navy); font-weight:600; }
+  input[type="file"] { display:none; }
 
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--gray-100);
-  }
-  .card-icon {
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-  .card-icon.navy { background: rgba(13,27,62,0.08); }
-  .card-icon.gold { background: rgba(212,160,23,0.12); }
-  .card-icon.green { background: rgba(16,185,129,0.1); }
-  .card-icon.red { background: rgba(239,68,68,0.1); }
-  .card-icon.purple { background: rgba(139,92,246,0.1); }
+  .sub-section { background:var(--gray-50); border-radius:var(--radius-sm); padding:14px; margin-bottom:12px; border:1px solid var(--gray-200); }
+  .sub-section-title { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
 
-  .card-title {
-    flex: 1;
-  }
-  .card-title h2 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--navy);
-  }
-  .card-title p {
-    font-size: 11px;
-    color: var(--gray-400);
-    margin-top: 2px;
-  }
+  .btn-submit { width:100%; padding:16px 20px; border-radius:var(--radius-sm); border:none; background:linear-gradient(135deg, var(--green) 0%, #059669 100%); color:var(--white); font-size:15px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(16,185,129,0.35); margin-top:20px; }
+  .btn-submit:active { transform:scale(0.98); }
+  .btn-submit:disabled { background:#ccc; box-shadow:none; cursor:not-allowed; }
 
-  /* ── FORM ELEMENTS ── */
-  .form-group {
-    margin-bottom: 16px;
-  }
-  label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gray-600);
-    margin-bottom: 6px;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-  label .required {
-    color: var(--red);
-    margin-left: 2px;
-  }
-  label .optional {
-    color: var(--gray-400);
-    font-weight: 400;
-    text-transform: none;
-    font-size: 11px;
-    margin-left: 4px;
-  }
-  input[type="text"],
-  input[type="date"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: var(--gray-800);
-    background: var(--gray-50);
-    transition: all 0.2s;
-    outline: none;
-    -webkit-appearance: none;
-  }
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--navy-mid);
-    background: var(--white);
-    box-shadow: 0 0 0 3px rgba(27,58,107,0.08);
-  }
-  textarea {
-    resize: none;
-    min-height: 80px;
-    line-height: 1.5;
-  }
-  select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
-    cursor: pointer;
-  }
+  .info-box { background:rgba(27,58,107,0.06); border-left:3px solid var(--navy-mid); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:10px 14px; font-size:12px; color:var(--navy-mid); margin-bottom:16px; line-height:1.5; }
 
-  /* ── KEGIATAN ITEM ── */
-  .kegiatan-list { display: flex; flex-direction: column; gap: 8px; }
-  .kegiatan-item {
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-  }
-  .kegiatan-num {
-    width: 28px; height: 28px;
-    border-radius: 8px;
-    background: var(--navy);
-    color: var(--white);
-    font-size: 12px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    margin-top: 10px;
-  }
-  .kegiatan-item input {
-    flex: 1;
-  }
-  .add-kegiatan-btn {
-    width: 100%;
-    padding: 10px;
-    border: 1.5px dashed var(--gray-300);
-    border-radius: var(--radius-sm);
-    background: none;
-    color: var(--navy-mid);
-    font-size: 13px;
-    font-weight: 600;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-  .add-kegiatan-btn:hover {
-    background: rgba(27,58,107,0.04);
-    border-color: var(--navy-mid);
-  }
+  /* Unit selector cards */
+  .unit-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:4px; }
+  .unit-card { padding:14px 10px; border-radius:var(--radius-sm); border:2px solid var(--gray-200); background:var(--white); cursor:pointer; text-align:center; transition:all 0.2s; }
+  .unit-card:active { transform:scale(0.97); }
+  .unit-card.selected { border-color:var(--navy); background:rgba(13,27,62,0.06); }
+  .unit-card .unit-icon { font-size:24px; margin-bottom:4px; }
+  .unit-card .unit-name { font-size:12px; font-weight:700; color:var(--navy); }
+  .unit-card .unit-sub { font-size:10px; color:var(--gray-400); margin-top:2px; }
 
-  /* ── FOTO UPLOAD ── */
-  .foto-section {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 2px dashed var(--gray-200);
-  }
-  .foto-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gray-600);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .foto-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .foto-btn {
-    padding: 14px 10px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--gray-200);
-    background: var(--white);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-  }
-  .foto-btn:active { transform: scale(0.97); }
-  .foto-btn .foto-btn-icon { font-size: 24px; }
-  .foto-btn .foto-btn-text {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--navy);
-  }
-  .foto-btn.camera { border-color: var(--navy-mid); background: rgba(27,58,107,0.04); }
-  .foto-btn.gallery { border-color: var(--gray-300); }
+  /* Dynamic form section */
+  #dynamic-form { display:none; animation: slideIn 0.3s ease; }
+  @keyframes slideIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-  .foto-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 4px;
-  }
-  .foto-preview-item {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: 10px;
-    overflow: hidden;
-    background: var(--gray-100);
-    border: 1.5px solid var(--gray-200);
-  }
-  .foto-preview-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .foto-remove {
-    position: absolute;
-    top: 4px; right: 4px;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    border: none;
-    font-size: 11px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    line-height: 1;
-  }
-  .foto-count {
-    font-size: 11px;
-    color: var(--gray-400);
-    margin-top: 6px;
-    font-family: 'DM Mono', monospace;
-  }
-  .foto-count span { color: var(--navy); font-weight: 600; }
+  /* Success */
+  .success-screen { display:none; text-align:center; padding:40px 20px; }
+  .success-screen.show { display:block; animation:slideIn 0.4s ease; }
+  .success-icon { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--green),#059669); display:flex; align-items:center; justify-content:center; font-size:36px; margin:0 auto 20px; box-shadow:0 8px 24px rgba(16,185,129,0.35); }
+  .success-screen h2 { font-size:22px; font-weight:800; color:var(--navy); margin-bottom:8px; }
+  .success-screen p { font-size:14px; color:var(--gray-400); line-height:1.6; }
+  .success-detail { background:var(--gray-50); border-radius:var(--radius); padding:16px; margin:20px 0; text-align:left; }
+  .summary-item { display:flex; padding:8px 0; border-bottom:1px solid var(--gray-100); gap:10px; }
+  .summary-item:last-child { border-bottom:none; }
+  .summary-key { font-size:12px; color:var(--gray-400); min-width:100px; flex-shrink:0; }
+  .summary-val { font-size:13px; color:var(--gray-800); font-weight:500; flex:1; }
+  .btn-new { width:100%; padding:15px; border-radius:var(--radius-sm); border:none; background:var(--navy); color:var(--white); font-size:14px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; margin-top:8px; }
 
-  /* Hidden file inputs */
-  input[type="file"] { display: none; }
+  /* Loading */
+  .loading-overlay { display:none; position:fixed; inset:0; background:rgba(13,27,62,0.7); z-index:999; align-items:center; justify-content:center; flex-direction:column; gap:16px; backdrop-filter:blur(4px); }
+  .loading-overlay.show { display:flex; }
+  .spinner { width:48px; height:48px; border:4px solid rgba(255,255,255,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .loading-text { color:var(--white); font-size:14px; font-weight:600; }
 
-  /* ── NAV BUTTONS ── */
-  .nav-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  .btn-back {
-    flex: 0 0 auto;
-    padding: 14px 20px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--gray-200);
-    background: var(--white);
-    color: var(--gray-600);
-    font-size: 14px;
-    font-weight: 600;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-next {
-    flex: 1;
-    padding: 14px 20px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 700;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    box-shadow: 0 4px 14px rgba(13,27,62,0.3);
-  }
-  .btn-next:active { transform: scale(0.98); }
-  .btn-submit {
-    flex: 1;
-    padding: 16px 20px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
-    color: var(--white);
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 14px rgba(16,185,129,0.35);
-  }
-
-  /* ── INFO BOX ── */
-  .info-box {
-    background: rgba(27,58,107,0.06);
-    border-left: 3px solid var(--navy-mid);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--navy-mid);
-    margin-bottom: 16px;
-    line-height: 1.5;
-  }
-
-  /* ── SUMMARY CARD ── */
-  .summary-section {
-    margin-bottom: 16px;
-  }
-  .summary-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-  }
-  .summary-item {
-    display: flex;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray-100);
-    gap: 10px;
-  }
-  .summary-item:last-child { border-bottom: none; }
-  .summary-key {
-    font-size: 12px;
-    color: var(--gray-400);
-    min-width: 110px;
-    flex-shrink: 0;
-  }
-  .summary-val {
-    font-size: 13px;
-    color: var(--gray-800);
-    font-weight: 500;
-    flex: 1;
-  }
-  .summary-unit {
-    background: var(--navy);
-    color: var(--white);
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    display: inline-block;
-    margin-bottom: 8px;
-  }
-
-  /* ── SUCCESS SCREEN ── */
-  .success-screen {
-    display: none;
-    text-align: center;
-    padding: 40px 20px;
-  }
-  .success-screen.show { display: block; animation: slideIn 0.4s ease; }
-  .success-icon {
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--green), #059669);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-    margin: 0 auto 20px;
-    box-shadow: 0 8px 24px rgba(16,185,129,0.35);
-  }
-  .success-screen h2 {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--navy);
-    margin-bottom: 8px;
-  }
-  .success-screen p {
-    font-size: 14px;
-    color: var(--gray-400);
-    line-height: 1.6;
-  }
-  .success-detail {
-    background: var(--gray-50);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin: 20px 0;
-    text-align: left;
-  }
-  .btn-new {
-    width: 100%;
-    padding: 15px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: var(--navy);
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 700;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: pointer;
-    margin-top: 8px;
-  }
-
-  /* ── LOADING OVERLAY ── */
-  .loading-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(13,27,62,0.7);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 16px;
-    backdrop-filter: blur(4px);
-  }
-  .loading-overlay.show { display: flex; }
-  .spinner {
-    width: 48px; height: 48px;
-    border: 4px solid rgba(255,255,255,0.2);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text {
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  /* ── TOAST ── */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--gray-800);
-    color: var(--white);
-    padding: 12px 20px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    transition: transform 0.3s ease;
-    z-index: 1000;
-    white-space: nowrap;
-    max-width: 90vw;
-    text-align: center;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.error { background: var(--red); }
-  .toast.success { background: var(--green); }
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--gray-800); color:var(--white); padding:12px 20px; border-radius:999px; font-size:13px; font-weight:500; transition:transform 0.3s ease; z-index:1000; white-space:nowrap; max-width:90vw; text-align:center; }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+  .toast.error { background:var(--red); }
+  .toast.success { background:var(--green); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="app-header">
   <div class="header-top">
     <div class="header-logo">✈️</div>
     <div class="header-title">
       <h1>UPBU H. Aroeppala Selayar</h1>
-      <p>Kementerian Perhubungan RI</p>
+      <p>Laporan Harian Unit Kerja</p>
     </div>
-    <div class="header-badge">HARIAN</div>
-  </div>
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="progressBar"></div>
-  </div>
-  <div class="progress-label">
-    <span id="progressStep">Langkah 1 dari 6</span>
-    <span id="progressPct">0%</span>
+    <div class="header-badge">STAF</div>
   </div>
 </div>
 
-<!-- STEP CHIPS -->
 <div class="main">
-  <div class="steps-nav">
-    <div class="step-chip active" data-step="0">📋 Info</div>
-    <div class="step-chip" data-step="1">🚒 PKP-PK</div>
-    <div class="step-chip" data-step="2">🔧 Teknisi</div>
-    <div class="step-chip" data-step="3">🛡️ Avsec</div>
-    <div class="step-chip" data-step="4">🧹 Sanitasi</div>
-    <div class="step-chip" data-step="5">✅ Kirim</div>
-  </div>
 
-  <!-- ══════════════════════════════════════ -->
-  <!-- STEP 0: INFORMASI UMUM -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="card active" id="step-0">
-    <div class="card-header">
-      <div class="card-icon navy">📋</div>
-      <div class="card-title">
-        <h2>Informasi Umum</h2>
-        <p>Data pelapor & tanggal laporan</p>
-      </div>
-    </div>
-
-    <div class="info-box">
-      Harap diisi sebelum pukul <strong>21.00 WITA</strong> setiap harinya. Satu laporan mencakup seluruh unit kerja.
-    </div>
-
-    <div class="form-group">
-      <label>Tanggal Laporan <span class="required">*</span></label>
-      <input type="date" id="tanggal" required>
-    </div>
-    <div class="form-group">
-      <label>Unit Kerja <span class="required">*</span></label>
-      <select id="unit">
-        <option value="">-- Pilih Unit --</option>
-        <option value="PKP-PK">PKP-PK</option>
-        <option value="Teknisi">Teknisi</option>
-        <option value="Avsec">Avsec</option>
-        <option value="Sanitasi">Sanitasi</option>
-        <option value="Tata Usaha">Tata Usaha</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Nama Pelapor <span class="required">*</span></label>
-      <input type="text" id="nama" placeholder="Nama lengkap">
-    </div>
-    <div class="form-group">
-      <label>NIP <span class="required">*</span></label>
-      <input type="text" id="nip" placeholder="Contoh: 199301012023011001" inputmode="numeric">
-    </div>
-
-    <div class="nav-buttons">
-      <button class="btn-next" onclick="nextStep(0)">
-        Lanjut <span>→</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ -->
-  <!-- STEP 1: PKP-PK -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="card" id="step-1">
-    <div class="card-header">
-      <div class="card-icon red">🚒</div>
-      <div class="card-title">
-        <h2>Unit PKP-PK</h2>
-        <p>Pencegahan & Pemadam Kebakaran</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Kegiatan Hari Ini <span class="required">*</span></label>
-      <div class="kegiatan-list" id="list-pkp">
-        <div class="kegiatan-item">
-          <div class="kegiatan-num">1</div>
-          <input type="text" placeholder="Contoh: Memanaskan kendaraan operasional">
+  <!-- FORM UTAMA -->
+  <div id="main-form">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon navy">📋</div>
+        <div class="card-title">
+          <h2>Informasi Pelapor</h2>
+          <p>Isi data diri dan pilih unit kerja</p>
         </div>
       </div>
-      <button class="add-kegiatan-btn" onclick="addKegiatan('pkp')">+ Tambah Kegiatan</button>
+
+      <div class="info-box">
+        Laporan akan dikirim ke <strong>Host/Koordinator</strong> untuk digabungkan. Harap isi sebelum pukul <strong>21.00 WITA</strong>.
+      </div>
+
+      <div class="form-group">
+        <label>Tanggal Laporan <span class="required">*</span></label>
+        <input type="date" id="tanggal">
+      </div>
+      <div class="form-group">
+        <label>Nama Lengkap <span class="required">*</span></label>
+        <input type="text" id="nama" placeholder="Nama lengkap sesuai identitas">
+      </div>
+      <div class="form-group">
+        <label>NIP <span class="required">*</span></label>
+        <input type="text" id="nip" placeholder="Contoh: 199301012023011001" inputmode="numeric">
+      </div>
+
+      <div class="form-group">
+        <label>Unit Kerja <span class="required">*</span></label>
+        <div class="unit-grid">
+          <div class="unit-card" onclick="pilihUnit('PKP-PK', this)">
+            <div class="unit-icon">🚒</div>
+            <div class="unit-name">PKP-PK</div>
+          </div>
+          <div class="unit-card" onclick="pilihUnit('Teknisi Listrik', this)">
+            <div class="unit-icon">⚡</div>
+            <div class="unit-name">Teknisi Listrik</div>
+            <div class="unit-sub">& Elband</div>
+          </div>
+          <div class="unit-card" onclick="pilihUnit('Teknisi Bangland', this)">
+            <div class="unit-icon">🏗️</div>
+            <div class="unit-name">Teknisi Bangland</div>
+          </div>
+          <div class="unit-card" onclick="pilihUnit('Teknisi A2B', this)">
+            <div class="unit-icon">🔧</div>
+            <div class="unit-name">Teknisi A2B</div>
+          </div>
+          <div class="unit-card" onclick="pilihUnit('Avsec', this)">
+            <div class="unit-icon">🛡️</div>
+            <div class="unit-name">Avsec</div>
+          </div>
+          <div class="unit-card" onclick="pilihUnit('Sanitasi', this)">
+            <div class="unit-icon">🧹</div>
+            <div class="unit-name">Sanitasi</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="foto-section">
-      <span class="foto-label">📷 Dokumentasi Kegiatan <span class="required">*</span></span>
-      <div class="foto-actions">
-        <button class="foto-btn camera" onclick="document.getElementById('cam-pkp').click()">
-          <span class="foto-btn-icon">📸</span>
-          <span class="foto-btn-text">Ambil Foto</span>
-        </button>
-        <button class="foto-btn gallery" onclick="document.getElementById('gal-pkp').click()">
-          <span class="foto-btn-icon">🖼️</span>
-          <span class="foto-btn-text">Dari Galeri</span>
+    <!-- FORM DINAMIS PER UNIT -->
+    <div id="dynamic-form">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon gold" id="unit-icon-display">🚒</div>
+          <div class="card-title">
+            <h2 id="unit-title-display">Unit PKP-PK</h2>
+            <p>Isi kegiatan hari ini</p>
+          </div>
+        </div>
+
+        <!-- FORM PKP-PK -->
+        <div id="form-pkp" class="unit-form-section" style="display:none">
+          <div class="form-group">
+            <label>Kegiatan Hari Ini <span class="required">*</span></label>
+            <div class="kegiatan-list" id="list-pkp">
+              <div class="kegiatan-item">
+                <div class="kegiatan-num">1</div>
+                <input type="text" placeholder="Contoh: Memanaskan kendaraan operasional">
+              </div>
+            </div>
+            <button class="add-kegiatan-btn" onclick="addKegiatan('pkp')">+ Tambah Kegiatan</button>
+          </div>
+        </div>
+
+        <!-- FORM TEKNISI LISTRIK -->
+        <div id="form-listrik" class="unit-form-section" style="display:none">
+          <div class="form-group">
+            <label>Kegiatan Teknisi Listrik & Elband <span class="required">*</span></label>
+            <div class="kegiatan-list" id="list-listrik">
+              <div class="kegiatan-item">
+                <div class="kegiatan-num">1</div>
+                <input type="text" placeholder="Contoh: Perbaikan lampu PJU jalan masuk">
+              </div>
+            </div>
+            <button class="add-kegiatan-btn" onclick="addKegiatan('listrik')">+ Tambah Kegiatan</button>
+          </div>
+        </div>
+
+        <!-- FORM TEKNISI BANGLAND -->
+        <div id="form-bangland" class="unit-form-section" style="display:none">
+          <div class="form-group">
+            <label>Kegiatan Teknisi Bangland <span class="required">*</span></label>
+            <div class="kegiatan-list" id="list-bangland">
+              <div class="kegiatan-item">
+                <div class="kegiatan-num">1</div>
+                <input type="text" placeholder="Contoh: Pemeliharaan gedung terminal">
+              </div>
+            </div>
+            <button class="add-kegiatan-btn" onclick="addKegiatan('bangland')">+ Tambah Kegiatan</button>
+          </div>
+        </div>
+
+        <!-- FORM TEKNISI A2B -->
+        <div id="form-a2b" class="unit-form-section" style="display:none">
+          <div class="form-group">
+            <label>Kegiatan Teknisi A2B <span class="required">*</span></label>
+            <div class="kegiatan-list" id="list-a2b">
+              <div class="kegiatan-item">
+                <div class="kegiatan-num">1</div>
+                <input type="text" placeholder="Contoh: Perbaikan tangga hidrolik">
+              </div>
+            </div>
+            <button class="add-kegiatan-btn" onclick="addKegiatan('a2b')">+ Tambah Kegiatan</button>
+          </div>
+        </div>
+
+        <!-- FORM AVSEC -->
+        <div id="form-avsec" class="unit-form-section" style="display:none">
+          <div class="form-group">
+            <label>Kegiatan Avsec <span class="required">*</span></label>
+            <div class="kegiatan-list" id="list-avsec">
+              <div class="kegiatan-item">
+                <div class="kegiatan-num">1</div>
+                <input type="text" placeholder="Contoh: Patroli malam">
+              </div>
+            </div>
+            <button class="add-kegiatan-btn" onclick="addKegiatan('avsec')">+ Tambah Kegiatan</button>
+          </div>
+        </div>
+
+        <!-- FORM SANITASI -->
+        <div id="form-sanitasi" class="unit-form-section" style="display:none">
+          <div class="form-group">
+            <label>Kegiatan Sanitasi <span class="required">*</span></label>
+            <div class="kegiatan-list" id="list-sanitasi">
+              <div class="kegiatan-item">
+                <div class="kegiatan-num">1</div>
+                <input type="text" placeholder="Contoh: Membersihkan area terminal">
+              </div>
+            </div>
+            <button class="add-kegiatan-btn" onclick="addKegiatan('sanitasi')">+ Tambah Kegiatan</button>
+          </div>
+        </div>
+
+        <!-- FOTO (semua unit) -->
+        <div class="foto-section">
+          <span class="foto-label">📷 Dokumentasi Kegiatan <span class="required">*</span></span>
+          <div class="foto-actions">
+            <button class="foto-btn camera" onclick="document.getElementById('cam-input').click()">
+              <span class="foto-btn-icon">📸</span>
+              <span class="foto-btn-text">Ambil Foto</span>
+            </button>
+            <button class="foto-btn" onclick="document.getElementById('gal-input').click()">
+              <span class="foto-btn-icon">🖼️</span>
+              <span class="foto-btn-text">Dari Galeri</span>
+            </button>
+          </div>
+          <input type="file" id="cam-input" accept="image/*" capture="environment" multiple onchange="handleFoto(this)">
+          <input type="file" id="gal-input" accept="image/*" multiple onchange="handleFoto(this)">
+          <div class="foto-preview-grid" id="foto-preview"></div>
+          <div class="foto-count">Foto: <span id="foto-cnt">0</span> / 10</div>
+        </div>
+
+        <div class="form-group" style="margin-top:20px">
+          <label>Catatan Tambahan <span class="optional">(opsional)</span></label>
+          <textarea id="catatan" placeholder="Hal-hal khusus yang perlu dilaporkan..."></textarea>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:4px">
+          <input type="checkbox" id="pernyataan" style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--navy)">
+          <label for="pernyataan" style="text-transform:none;letter-spacing:0;font-size:13px;color:var(--gray-600);font-weight:500">
+            Saya menyatakan laporan ini dibuat dengan sebenar-benarnya.
+          </label>
+        </div>
+
+        <button class="btn-submit" onclick="submitLaporan()" id="btn-submit">
+          🚀 Kirim ke Host
         </button>
       </div>
-      <input type="file" id="cam-pkp" accept="image/*" capture="environment" multiple onchange="handleFoto(this,'pkp')">
-      <input type="file" id="gal-pkp" accept="image/*" multiple onchange="handleFoto(this,'pkp')">
-      <div class="foto-preview-grid" id="prev-pkp"></div>
-      <div class="foto-count">Foto: <span id="cnt-pkp">0</span> / 10</div>
-    </div>
-
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep(1)">←</button>
-      <button class="btn-next" onclick="nextStep(1)">Lanjut →</button>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════ -->
-  <!-- STEP 2: TEKNISI -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="card" id="step-2">
-    <div class="card-header">
-      <div class="card-icon navy">🔧</div>
-      <div class="card-title">
-        <h2>Unit Teknisi</h2>
-        <p>Listrik, Bangland & A2B</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>A. Teknisi Listrik & Elband <span class="required">*</span></label>
-      <div class="kegiatan-list" id="list-listrik">
-        <div class="kegiatan-item">
-          <div class="kegiatan-num">1</div>
-          <input type="text" placeholder="Contoh: Perbaikan lampu PJU jalan masuk">
-        </div>
-      </div>
-      <button class="add-kegiatan-btn" onclick="addKegiatan('listrik')">+ Tambah Kegiatan</button>
-    </div>
-
-    <div class="form-group">
-      <label>B. Teknisi Bangland <span class="required">*</span></label>
-      <div class="kegiatan-list" id="list-bangland">
-        <div class="kegiatan-item">
-          <div class="kegiatan-num">1</div>
-          <input type="text" placeholder="Contoh: Stand by / Pemeliharaan gedung">
-        </div>
-      </div>
-      <button class="add-kegiatan-btn" onclick="addKegiatan('bangland')">+ Tambah Kegiatan</button>
-    </div>
-
-    <div class="form-group">
-      <label>C. Teknisi A2B <span class="required">*</span></label>
-      <div class="kegiatan-list" id="list-a2b">
-        <div class="kegiatan-item">
-          <div class="kegiatan-num">1</div>
-          <input type="text" placeholder="Contoh: Perbaikan tangga hidrolik">
-        </div>
-      </div>
-      <button class="add-kegiatan-btn" onclick="addKegiatan('a2b')">+ Tambah Kegiatan</button>
-    </div>
-
-    <div class="foto-section">
-      <span class="foto-label">📷 Dokumentasi Kegiatan <span class="required">*</span></span>
-      <div class="foto-actions">
-        <button class="foto-btn camera" onclick="document.getElementById('cam-tek').click()">
-          <span class="foto-btn-icon">📸</span>
-          <span class="foto-btn-text">Ambil Foto</span>
-        </button>
-        <button class="foto-btn gallery" onclick="document.getElementById('gal-tek').click()">
-          <span class="foto-btn-icon">🖼️</span>
-          <span class="foto-btn-text">Dari Galeri</span>
-        </button>
-      </div>
-      <input type="file" id="cam-tek" accept="image/*" capture="environment" multiple onchange="handleFoto(this,'tek')">
-      <input type="file" id="gal-tek" accept="image/*" multiple onchange="handleFoto(this,'tek')">
-      <div class="foto-preview-grid" id="prev-tek"></div>
-      <div class="foto-count">Foto: <span id="cnt-tek">0</span> / 10</div>
-    </div>
-
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep(2)">←</button>
-      <button class="btn-next" onclick="nextStep(2)">Lanjut →</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ -->
-  <!-- STEP 3: AVSEC -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="card" id="step-3">
-    <div class="card-header">
-      <div class="card-icon purple">🛡️</div>
-      <div class="card-title">
-        <h2>Unit Avsec</h2>
-        <p>Aviation Security</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Kegiatan Hari Ini <span class="required">*</span></label>
-      <div class="kegiatan-list" id="list-avsec">
-        <div class="kegiatan-item">
-          <div class="kegiatan-num">1</div>
-          <input type="text" placeholder="Contoh: Patroli malam">
-        </div>
-      </div>
-      <button class="add-kegiatan-btn" onclick="addKegiatan('avsec')">+ Tambah Kegiatan</button>
-    </div>
-
-    <div class="foto-section">
-      <span class="foto-label">📷 Dokumentasi Kegiatan <span class="required">*</span></span>
-      <div class="foto-actions">
-        <button class="foto-btn camera" onclick="document.getElementById('cam-avsec').click()">
-          <span class="foto-btn-icon">📸</span>
-          <span class="foto-btn-text">Ambil Foto</span>
-        </button>
-        <button class="foto-btn gallery" onclick="document.getElementById('gal-avsec').click()">
-          <span class="foto-btn-icon">🖼️</span>
-          <span class="foto-btn-text">Dari Galeri</span>
-        </button>
-      </div>
-      <input type="file" id="cam-avsec" accept="image/*" capture="environment" multiple onchange="handleFoto(this,'avsec')">
-      <input type="file" id="gal-avsec" accept="image/*" multiple onchange="handleFoto(this,'avsec')">
-      <div class="foto-preview-grid" id="prev-avsec"></div>
-      <div class="foto-count">Foto: <span id="cnt-avsec">0</span> / 10</div>
-    </div>
-
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep(3)">←</button>
-      <button class="btn-next" onclick="nextStep(3)">Lanjut →</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ -->
-  <!-- STEP 4: SANITASI -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="card" id="step-4">
-    <div class="card-header">
-      <div class="card-icon green">🧹</div>
-      <div class="card-title">
-        <h2>Unit Sanitasi</h2>
-        <p>Kebersihan & Sanitasi</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Kegiatan Hari Ini <span class="required">*</span></label>
-      <div class="kegiatan-list" id="list-sanitasi">
-        <div class="kegiatan-item">
-          <div class="kegiatan-num">1</div>
-          <input type="text" placeholder="Contoh: Membersihkan area terminal">
-        </div>
-      </div>
-      <button class="add-kegiatan-btn" onclick="addKegiatan('sanitasi')">+ Tambah Kegiatan</button>
-    </div>
-
-    <div class="foto-section">
-      <span class="foto-label">📷 Dokumentasi Kegiatan <span class="required">*</span></span>
-      <div class="foto-actions">
-        <button class="foto-btn camera" onclick="document.getElementById('cam-san').click()">
-          <span class="foto-btn-icon">📸</span>
-          <span class="foto-btn-text">Ambil Foto</span>
-        </button>
-        <button class="foto-btn gallery" onclick="document.getElementById('gal-san').click()">
-          <span class="foto-btn-icon">🖼️</span>
-          <span class="foto-btn-text">Dari Galeri</span>
-        </button>
-      </div>
-      <input type="file" id="cam-san" accept="image/*" capture="environment" multiple onchange="handleFoto(this,'san')">
-      <input type="file" id="gal-san" accept="image/*" multiple onchange="handleFoto(this,'san')">
-      <div class="foto-preview-grid" id="prev-san"></div>
-      <div class="foto-count">Foto: <span id="cnt-san">0</span> / 10</div>
-    </div>
-
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep(4)">←</button>
-      <button class="btn-next" onclick="nextStep(4)">Lanjut →</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ -->
-  <!-- STEP 5: RINGKASAN & KIRIM -->
-  <!-- ══════════════════════════════════════ -->
-  <div class="card" id="step-5">
-    <div class="card-header">
-      <div class="card-icon gold">✅</div>
-      <div class="card-title">
-        <h2>Konfirmasi & Kirim</h2>
-        <p>Periksa kembali sebelum mengirim</p>
-      </div>
-    </div>
-
-    <div class="summary-section">
-      <div class="summary-title">Informasi Pelapor</div>
-      <div class="summary-item"><span class="summary-key">Tanggal</span><span class="summary-val" id="sum-tanggal">-</span></div>
-      <div class="summary-item"><span class="summary-key">Unit</span><span class="summary-val" id="sum-unit">-</span></div>
-      <div class="summary-item"><span class="summary-key">Nama</span><span class="summary-val" id="sum-nama">-</span></div>
-      <div class="summary-item"><span class="summary-key">NIP</span><span class="summary-val" id="sum-nip">-</span></div>
-    </div>
-
-    <div class="summary-section">
-      <div class="summary-title">Ringkasan Kegiatan</div>
-      <div id="sum-kegiatan"></div>
-    </div>
-
-    <div class="summary-section">
-      <div class="summary-title">Dokumentasi Foto</div>
-      <div id="sum-foto"></div>
-    </div>
-
-    <div class="info-box" style="margin-top:16px">
-      ⚠️ Pastikan semua data sudah benar. Laporan yang sudah dikirim tidak dapat diubah.
-    </div>
-
-    <div class="form-group">
-      <label>Catatan Tambahan <span class="optional">(opsional)</span></label>
-      <textarea id="catatan" placeholder="Hal-hal khusus yang perlu dilaporkan kepada Kepala Kantor..."></textarea>
-    </div>
-
-    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px">
-      <input type="checkbox" id="pernyataan" style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--navy)">
-      <label for="pernyataan" style="text-transform:none;letter-spacing:0;font-size:13px;color:var(--gray-600);font-weight:500">
-        Saya menyatakan bahwa laporan ini dibuat dengan sebenar-benarnya dan dapat dipertanggungjawabkan.
-      </label>
-    </div>
-
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep(5)">←</button>
-      <button class="btn-submit" onclick="submitLaporan()">🚀 Kirim Laporan</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ -->
   <!-- SUCCESS SCREEN -->
-  <!-- ══════════════════════════════════════ -->
   <div class="success-screen" id="successScreen">
     <div class="success-icon">✅</div>
     <h2>Laporan Terkirim!</h2>
-    <p>Laporan harian berhasil dikirim dan tersimpan. PDF akan digenerate otomatis oleh sistem.</p>
+    <p>Laporan kamu sudah diterima oleh Host dan akan digabungkan dengan laporan unit lain.</p>
     <div class="success-detail">
       <div class="summary-item"><span class="summary-key">Tanggal</span><span class="summary-val" id="suc-tanggal">-</span></div>
-      <div class="summary-item"><span class="summary-key">Pelapor</span><span class="summary-val" id="suc-nama">-</span></div>
+      <div class="summary-item"><span class="summary-key">Nama</span><span class="summary-val" id="suc-nama">-</span></div>
       <div class="summary-item"><span class="summary-key">Unit</span><span class="summary-val" id="suc-unit">-</span></div>
       <div class="summary-item"><span class="summary-key">Waktu Kirim</span><span class="summary-val" id="suc-waktu">-</span></div>
     </div>
-    <button class="btn-new" onclick="resetForm()">📋 Isi Laporan Baru</button>
+    <p style="font-size:12px;color:var(--gray-400)">Tunggu konfirmasi dari Host bahwa laporan gabungan sudah dikirim ke Kepala Kantor.</p>
+    <button class="btn-new" onclick="location.reload()">📋 Isi Laporan Baru</button>
   </div>
 </div>
 
-<!-- LOADING OVERLAY -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text" id="loadingText">Mengirim laporan...</div>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ================================================================
-//  KONFIGURASI — GANTI DENGAN URL GOOGLE APPS SCRIPT WEB APP
-// ================================================================
-const SCRIPT_URL = "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_WEB_APP";
-// Cara dapat URL ini: di Google Apps Script → Deploy → New deployment
-// → Web app → Execute as Me → Anyone can access → Deploy → copy URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby48cqdvJnU9L7GayK8Gn_jzmSwfv7WH2WrhzAyZaCDuDUsZynZ7b74t5BOs21NOfjyGg/exec";
 
-// ================================================================
-//  STATE
-// ================================================================
-let currentStep = 0;
-const TOTAL_STEPS = 6;
-const fotoData = { pkp: [], tek: [], avsec: [], san: [] };
+let selectedUnit = '';
+let fotoFiles = [];
 
-// ================================================================
-//  NAVIGASI — Skip unit lain, hanya isi unit sendiri
-// ================================================================
-const STEP_UNIT_MAP = { 1: 'PKP-PK', 2: 'Teknisi', 3: 'Avsec', 4: 'Sanitasi' };
+const UNIT_CONFIG = {
+  'PKP-PK':            { icon:'🚒', form:'pkp',      label:'Unit PKP-PK' },
+  'Teknisi Listrik':   { icon:'⚡', form:'listrik',   label:'Teknisi Listrik & Elband' },
+  'Teknisi Bangland':  { icon:'🏗️', form:'bangland',  label:'Teknisi Bangland' },
+  'Teknisi A2B':       { icon:'🔧', form:'a2b',       label:'Teknisi A2B' },
+  'Avsec':             { icon:'🛡️', form:'avsec',     label:'Unit Avsec' },
+  'Sanitasi':          { icon:'🧹', form:'sanitasi',  label:'Unit Sanitasi' },
+};
 
-function getSelectedUnit() { return document.getElementById('unit').value; }
+function pilihUnit(unit, el) {
+  // Hapus selected semua
+  document.querySelectorAll('.unit-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedUnit = unit;
 
-function isMyStep(step) {
-  const unit = getSelectedUnit();
-  if (!STEP_UNIT_MAP[step]) return true;
-  if (unit === 'Tata Usaha') return false;
-  return STEP_UNIT_MAP[step] === unit;
+  // Sembunyikan semua form unit
+  document.querySelectorAll('.unit-form-section').forEach(f => f.style.display = 'none');
+
+  // Tampilkan form unit yang dipilih
+  const cfg = UNIT_CONFIG[unit];
+  document.getElementById(`form-${cfg.form}`).style.display = 'block';
+  document.getElementById('unit-icon-display').textContent = cfg.icon;
+  document.getElementById('unit-title-display').textContent = cfg.label;
+
+  // Tampilkan form dinamis
+  document.getElementById('dynamic-form').style.display = 'block';
+  document.getElementById('dynamic-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function _dummyImg() {
-  return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-}
-
-function autoFillSkippedUnits() {
-  const unit = getSelectedUnit();
-  if (unit !== 'PKP-PK' && unit !== '') {
-    const inp = document.querySelector('#list-pkp input');
-    if (inp && !inp.value) inp.value = 'Stand by';
-    if (fotoData.pkp.length === 0) fotoData.pkp.push({ name: 'standby', data: _dummyImg() });
-  }
-  if (unit !== 'Teknisi' && unit !== '') {
-    ['#list-listrik input','#list-bangland input','#list-a2b input'].forEach(sel => {
-      const inp = document.querySelector(sel);
-      if (inp && !inp.value) inp.value = 'Stand by';
-    });
-    if (fotoData.tek.length === 0) fotoData.tek.push({ name: 'standby', data: _dummyImg() });
-  }
-  if (unit !== 'Avsec' && unit !== '') {
-    const inp = document.querySelector('#list-avsec input');
-    if (inp && !inp.value) inp.value = 'Stand by';
-    if (fotoData.avsec.length === 0) fotoData.avsec.push({ name: 'standby', data: _dummyImg() });
-  }
-  if (unit !== 'Sanitasi' && unit !== '') {
-    const inp = document.querySelector('#list-sanitasi input');
-    if (inp && !inp.value) inp.value = 'Stand by';
-    if (fotoData.san.length === 0) fotoData.san.push({ name: 'standby', data: _dummyImg() });
-  }
-}
-
-function getNextStep(from) {
-  let next = from + 1;
-  while (next < 5 && !isMyStep(next)) next++;
-  return next;
-}
-
-function getPrevStep(from) {
-  let prev = from - 1;
-  while (prev > 0 && !isMyStep(prev)) prev--;
-  return prev;
-}
-
-function nextStep(from) {
-  if (!validateStep(from)) return;
-  if (from === 0) autoFillSkippedUnits();
-  const next = getNextStep(from);
-  if (next >= 5) { buildSummary(); goToStep(5); }
-  else goToStep(next);
-}
-
-function prevStep(from) {
-  goToStep(getPrevStep(from));
-}
-
-function goToStep(step) {
-  document.getElementById(`step-${currentStep}`).classList.remove('active');
-  document.querySelectorAll('.step-chip')[currentStep].classList.remove('active');
-  if (currentStep < step) {
-    document.querySelectorAll('.step-chip')[currentStep].classList.add('done');
-  } else {
-    document.querySelectorAll('.step-chip')[currentStep].classList.remove('done');
-  }
-
-  currentStep = step;
-  document.getElementById(`step-${currentStep}`).classList.add('active');
-  document.querySelectorAll('.step-chip')[currentStep].classList.add('active');
-
-  // Update progress
-  const pct = Math.round((currentStep / (TOTAL_STEPS - 1)) * 100);
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
-  document.getElementById('progressStep').textContent = `Langkah ${currentStep + 1} dari ${TOTAL_STEPS}`;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ================================================================
-//  VALIDASI
-// ================================================================
-function validateStep(step) {
-  if (step === 0) {
-    const tanggal = document.getElementById('tanggal').value;
-    const unit    = document.getElementById('unit').value;
-    const nama    = document.getElementById('nama').value.trim();
-    const nip     = document.getElementById('nip').value.trim();
-    if (!tanggal) { showToast('Pilih tanggal laporan', 'error'); return false; }
-    if (!unit)    { showToast('Pilih unit kerja', 'error'); return false; }
-    if (!nama)    { showToast('Isi nama pelapor', 'error'); return false; }
-    if (!nip)     { showToast('Isi NIP pelapor', 'error'); return false; }
-  }
-  if (step === 1) {
-    const inputs = document.querySelectorAll('#list-pkp input');
-    if (!inputs[0].value.trim()) { showToast('Isi minimal 1 kegiatan PKP-PK', 'error'); return false; }
-    if (fotoData.pkp.length === 0) { showToast('Upload minimal 1 foto PKP-PK', 'error'); return false; }
-  }
-  if (step === 2) {
-    const l = document.querySelectorAll('#list-listrik input');
-    const b = document.querySelectorAll('#list-bangland input');
-    const a = document.querySelectorAll('#list-a2b input');
-    if (!l[0].value.trim()) { showToast('Isi kegiatan Teknisi Listrik', 'error'); return false; }
-    if (!b[0].value.trim()) { showToast('Isi kegiatan Teknisi Bangland', 'error'); return false; }
-    if (!a[0].value.trim()) { showToast('Isi kegiatan Teknisi A2B', 'error'); return false; }
-    if (fotoData.tek.length === 0) { showToast('Upload minimal 1 foto Teknisi', 'error'); return false; }
-  }
-  if (step === 3) {
-    const inputs = document.querySelectorAll('#list-avsec input');
-    if (!inputs[0].value.trim()) { showToast('Isi minimal 1 kegiatan Avsec', 'error'); return false; }
-    if (fotoData.avsec.length === 0) { showToast('Upload minimal 1 foto Avsec', 'error'); return false; }
-  }
-  if (step === 4) {
-    const inputs = document.querySelectorAll('#list-sanitasi input');
-    if (!inputs[0].value.trim()) { showToast('Isi minimal 1 kegiatan Sanitasi', 'error'); return false; }
-    if (fotoData.san.length === 0) { showToast('Upload minimal 1 foto Sanitasi', 'error'); return false; }
-  }
-  return true;
-}
-
-// ================================================================
-//  TAMBAH KEGIATAN
-// ================================================================
 function addKegiatan(unit) {
   const list = document.getElementById(`list-${unit}`);
-  const num  = list.children.length + 1;
+  const num = list.children.length + 1;
   const item = document.createElement('div');
   item.className = 'kegiatan-item';
-  item.innerHTML = `
-    <div class="kegiatan-num">${num}</div>
-    <input type="text" placeholder="Kegiatan ${num}">
-  `;
+  item.innerHTML = `<div class="kegiatan-num">${num}</div><input type="text" placeholder="Kegiatan ${num}">`;
   list.appendChild(item);
   item.querySelector('input').focus();
 }
 
 function getKegiatan(unit) {
-  return Array.from(document.querySelectorAll(`#list-${unit} input`))
-    .map(i => i.value.trim()).filter(v => v);
+  const el = document.getElementById(`list-${unit}`);
+  if (!el) return [];
+  return Array.from(el.querySelectorAll('input')).map(i => i.value.trim()).filter(v => v);
 }
 
-// ================================================================
-//  FOTO HANDLER
-// ================================================================
-function handleFoto(input, unit) {
-  const files = Array.from(input.files);
-  files.forEach(file => {
-    if (fotoData[unit].length >= 10) {
-      showToast('Maksimal 10 foto per unit', 'error');
-      return;
-    }
-    // Kompres & resize gambar
+function handleFoto(input) {
+  Array.from(input.files).forEach(file => {
+    if (fotoFiles.length >= 10) { showToast('Maksimal 10 foto', 'error'); return; }
     const reader = new FileReader();
     reader.onload = (e) => {
       resizeImage(e.target.result, 1200, (compressed) => {
-        fotoData[unit].push({ name: file.name, data: compressed });
-        renderPreview(unit);
+        fotoFiles.push({ name: file.name, data: compressed });
+        renderPreview();
       });
     };
     reader.readAsDataURL(file);
@@ -1180,9 +422,9 @@ function handleFoto(input, unit) {
 function resizeImage(dataUrl, maxWidth, callback) {
   const img = new Image();
   img.onload = () => {
-    const ratio  = Math.min(maxWidth / img.width, maxWidth / img.height, 1);
+    const ratio = Math.min(maxWidth / img.width, maxWidth / img.height, 1);
     const canvas = document.createElement('canvas');
-    canvas.width  = img.width  * ratio;
+    canvas.width = img.width * ratio;
     canvas.height = img.height * ratio;
     canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
     callback(canvas.toDataURL('image/jpeg', 0.75));
@@ -1190,156 +432,79 @@ function resizeImage(dataUrl, maxWidth, callback) {
   img.src = dataUrl;
 }
 
-function renderPreview(unit) {
-  const grid = document.getElementById(`prev-${unit}`);
+function renderPreview() {
+  const grid = document.getElementById('foto-preview');
   grid.innerHTML = '';
-  fotoData[unit].forEach((foto, i) => {
+  fotoFiles.forEach((foto, i) => {
     const item = document.createElement('div');
     item.className = 'foto-preview-item';
-    item.innerHTML = `
-      <img src="${foto.data}" alt="Foto ${i+1}">
-      <button class="foto-remove" onclick="removeFoto('${unit}',${i})">×</button>
-    `;
+    item.innerHTML = `<img src="${foto.data}"><button class="foto-remove" onclick="removeFoto(${i})">×</button>`;
     grid.appendChild(item);
   });
-  document.getElementById(`cnt-${unit}`).textContent = fotoData[unit].length;
+  document.getElementById('foto-cnt').textContent = fotoFiles.length;
 }
 
-function removeFoto(unit, idx) {
-  fotoData[unit].splice(idx, 1);
-  renderPreview(unit);
+function removeFoto(idx) {
+  fotoFiles.splice(idx, 1);
+  renderPreview();
 }
 
-// ================================================================
-//  BUILD SUMMARY
-// ================================================================
-function buildSummary() {
-  const tgl = document.getElementById('tanggal').value;
-  const tglFormatted = tgl ? new Date(tgl + 'T00:00:00').toLocaleDateString('id-ID',
-    { weekday:'long', year:'numeric', month:'long', day:'numeric' }) : '-';
-
-  document.getElementById('sum-tanggal').textContent = tglFormatted;
-  document.getElementById('sum-unit').textContent = document.getElementById('unit').value;
-  document.getElementById('sum-nama').textContent = document.getElementById('nama').value;
-  document.getElementById('sum-nip').textContent  = document.getElementById('nip').value;
-
-  const units = [
-    { label: '🚒 PKP-PK', kegiatan: getKegiatan('pkp') },
-    { label: '🔧 Teknisi Listrik', kegiatan: getKegiatan('listrik') },
-    { label: '🔧 Teknisi Bangland', kegiatan: getKegiatan('bangland') },
-    { label: '🔧 Teknisi A2B', kegiatan: getKegiatan('a2b') },
-    { label: '🛡️ Avsec', kegiatan: getKegiatan('avsec') },
-    { label: '🧹 Sanitasi', kegiatan: getKegiatan('sanitasi') },
-  ];
-
-  const kegDiv = document.getElementById('sum-kegiatan');
-  kegDiv.innerHTML = units.map(u => `
-    <div style="margin-bottom:12px">
-      <div class="summary-unit">${u.label}</div>
-      ${u.kegiatan.map(k => `<div class="summary-item" style="padding:6px 0"><span class="summary-val">• ${k}</span></div>`).join('')}
-    </div>
-  `).join('');
-
-  const fotoDiv = document.getElementById('sum-foto');
-  const fotoSummary = [
-    { label: 'PKP-PK', count: fotoData.pkp.length },
-    { label: 'Teknisi', count: fotoData.tek.length },
-    { label: 'Avsec', count: fotoData.avsec.length },
-    { label: 'Sanitasi', count: fotoData.san.length },
-  ];
-  fotoDiv.innerHTML = fotoSummary.map(f => `
-    <div class="summary-item">
-      <span class="summary-key">${f.label}</span>
-      <span class="summary-val">${f.count} foto ✅</span>
-    </div>
-  `).join('');
-}
-
-// ================================================================
-//  SUBMIT LAPORAN
-// ================================================================
 async function submitLaporan() {
-  if (!document.getElementById('pernyataan').checked) {
-    showToast('Centang pernyataan pelapor terlebih dahulu', 'error');
-    return;
-  }
+  const tanggal = document.getElementById('tanggal').value;
+  const nama    = document.getElementById('nama').value.trim();
+  const nip     = document.getElementById('nip').value.trim();
 
-  const tgl = document.getElementById('tanggal').value;
-  const tglFormatted = new Date(tgl + 'T00:00:00').toLocaleDateString('id-ID',
+  if (!tanggal)      { showToast('Pilih tanggal laporan', 'error'); return; }
+  if (!nama)         { showToast('Isi nama pelapor', 'error'); return; }
+  if (!nip)          { showToast('Isi NIP', 'error'); return; }
+  if (!selectedUnit) { showToast('Pilih unit kerja', 'error'); return; }
+
+  const cfg = UNIT_CONFIG[selectedUnit];
+  const kegiatan = getKegiatan(cfg.form);
+  if (kegiatan.length === 0) { showToast('Isi minimal 1 kegiatan', 'error'); return; }
+  if (fotoFiles.length === 0) { showToast('Upload minimal 1 foto dokumentasi', 'error'); return; }
+  if (!document.getElementById('pernyataan').checked) { showToast('Centang pernyataan terlebih dahulu', 'error'); return; }
+
+  const tglFormatted = new Date(tanggal + 'T00:00:00').toLocaleDateString('id-ID',
     { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
   const payload = {
-    tanggal:    tglFormatted,
-    unit:       document.getElementById('unit').value,
-    nama:       document.getElementById('nama').value.trim(),
-    nip:        document.getElementById('nip').value.trim(),
-    catatan:    document.getElementById('catatan').value.trim(),
-    pkp:        getKegiatan('pkp'),
-    listrik:    getKegiatan('listrik'),
-    bangland:   getKegiatan('bangland'),
-    a2b:        getKegiatan('a2b'),
-    avsec:      getKegiatan('avsec'),
-    sanitasi:   getKegiatan('sanitasi'),
-    foto_pkp:   fotoData.pkp.map(f => f.data),
-    foto_tek:   fotoData.tek.map(f => f.data),
-    foto_avsec: fotoData.avsec.map(f => f.data),
-    foto_san:   fotoData.san.map(f => f.data),
+    type:      'staf',
+    tanggal:   tglFormatted,
+    nama,
+    nip,
+    unit:      selectedUnit,
+    kegiatan,
+    catatan:   document.getElementById('catatan').value.trim(),
+    fotos:     fotoFiles.map(f => f.data),
   };
 
-  showLoading('Mengirim laporan...');
+  showLoading('Mengirim laporan ke Host...');
 
   try {
-    // Jika SCRIPT_URL belum diset, simpan ke localStorage sebagai demo
-    if (SCRIPT_URL === "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_WEB_APP") {
-      await new Promise(r => setTimeout(r, 2000)); // simulasi
-      showSuccess(payload);
-      return;
-    }
-
-    const resp = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    });
-    const result = await resp.json();
-
-    if (result.status === 'ok') {
-      showSuccess(payload);
+    if (SCRIPT_URL.includes('GANTI')) {
+      await new Promise(r => setTimeout(r, 2000));
     } else {
-      throw new Error(result.message || 'Gagal mengirim');
+      await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify(payload) });
     }
-  } catch (err) {
+
+    hideLoading();
+    document.getElementById('main-form').style.display = 'none';
+    document.getElementById('suc-tanggal').textContent = tglFormatted;
+    document.getElementById('suc-nama').textContent    = nama;
+    document.getElementById('suc-unit').textContent    = selectedUnit;
+    document.getElementById('suc-waktu').textContent   = new Date().toLocaleTimeString('id-ID') + ' WITA';
+    document.getElementById('successScreen').classList.add('show');
+    window.scrollTo({ top:0, behavior:'smooth' });
+
+  } catch(err) {
     hideLoading();
     showToast('Gagal mengirim: ' + err.message, 'error');
   }
 }
 
-function showSuccess(payload) {
-  hideLoading();
-  // Sembunyikan semua card
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.step-chip').forEach(c => { c.classList.remove('active'); c.classList.add('done'); });
-
-  document.getElementById('suc-tanggal').textContent = payload.tanggal;
-  document.getElementById('suc-nama').textContent    = payload.nama;
-  document.getElementById('suc-unit').textContent    = payload.unit;
-  document.getElementById('suc-waktu').textContent   = new Date().toLocaleTimeString('id-ID',
-    { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WITA';
-
-  document.getElementById('progressBar').style.width = '100%';
-  document.getElementById('progressPct').textContent = '100%';
-  document.getElementById('successScreen').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function resetForm() {
-  location.reload();
-}
-
-// ================================================================
-//  UI HELPERS
-// ================================================================
 function showLoading(text) {
-  document.getElementById('loadingText').textContent = text || 'Memproses...';
+  document.getElementById('loadingText').textContent = text;
   document.getElementById('loadingOverlay').classList.add('show');
 }
 function hideLoading() {
@@ -1347,18 +512,15 @@ function hideLoading() {
 }
 
 let toastTimer;
-function showToast(msg, type = '') {
+function showToast(msg, type='') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show ' + type;
+  t.textContent = msg; t.className = 'toast show ' + type;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// Set default tanggal hari ini
 document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('tanggal').value = today;
+  document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
 });
 </script>
 </body>
