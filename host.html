@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0D1B3E">
+<title>Host Dashboard · UPBU H. Aroeppala Selayar</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0D1B3E; --navy-mid:#1B3A6B; --navy-light:#2E5090;
+    --gold:#D4A017; --gold-light:#F0C040;
+    --white:#FFFFFF; --gray-50:#F8FAFC; --gray-100:#F1F5F9;
+    --gray-200:#E2E8F0; --gray-400:#94A3B8; --gray-600:#475569;
+    --gray-800:#1E293B; --green:#10B981; --red:#EF4444; --orange:#F59E0B;
+    --shadow-sm:0 1px 3px rgba(0,0,0,0.08); --radius:16px; --radius-sm:10px;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--gray-50); color:var(--gray-800); min-height:100vh; padding-bottom:40px; }
+
+  .app-header { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--navy-light) 100%); padding:20px 20px 24px; position:relative; overflow:hidden; }
+  .app-header::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; border-radius:50%; background:rgba(212,160,23,0.12); }
+  .header-top { display:flex; align-items:center; gap:12px; }
+  .header-logo { width:44px; height:44px; background:rgba(255,255,255,0.15); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.2); flex-shrink:0; }
+  .header-title h1 { font-size:15px; font-weight:800; color:var(--white); line-height:1.3; }
+  .header-title p { font-size:11px; color:rgba(255,255,255,0.65); margin-top:2px; }
+  .header-badge { background:var(--gold); color:var(--navy); font-size:10px; font-weight:700; padding:4px 10px; border-radius:20px; white-space:nowrap; }
+
+  .main { padding:0 16px; max-width:600px; margin:0 auto; }
+
+  .card { background:var(--white); border-radius:var(--radius); padding:20px; margin-top:16px; box-shadow:var(--shadow-sm); border:1px solid var(--gray-100); }
+  .card-header { display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:2px solid var(--gray-100); }
+  .card-icon { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .card-icon.navy { background:rgba(13,27,62,0.08); }
+  .card-icon.gold { background:rgba(212,160,23,0.12); }
+  .card-icon.green { background:rgba(16,185,129,0.1); }
+  .card-title h2 { font-size:15px; font-weight:700; color:var(--navy); }
+  .card-title p { font-size:11px; color:var(--gray-400); margin-top:2px; }
+
+  /* STATUS GRID */
+  .status-grid { display:flex; flex-direction:column; gap:8px; }
+  .status-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--gray-200); background:var(--gray-50); transition:all 0.2s; }
+  .status-item.done { border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.05); }
+  .status-item.waiting { border-color:rgba(245,158,11,0.3); background:rgba(245,158,11,0.05); }
+  .status-icon { font-size:22px; flex-shrink:0; }
+  .status-info { flex:1; }
+  .status-unit { font-size:13px; font-weight:700; color:var(--navy); }
+  .status-sub { font-size:11px; color:var(--gray-400); margin-top:2px; }
+  .status-badge { padding:4px 10px; border-radius:999px; font-size:11px; font-weight:700; flex-shrink:0; }
+  .status-badge.done { background:rgba(16,185,129,0.15); color:#059669; }
+  .status-badge.waiting { background:rgba(245,158,11,0.15); color:#D97706; }
+  .status-time { font-size:10px; color:var(--gray-400); font-family:'DM Mono',monospace; margin-top:2px; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { background:var(--gray-100); border-radius:999px; height:8px; overflow:hidden; margin:12px 0; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),#059669); border-radius:999px; transition:width 0.5s ease; }
+  .progress-label { display:flex; justify-content:space-between; font-size:12px; color:var(--gray-400); }
+  .progress-label span { font-weight:600; color:var(--navy); }
+
+  /* LAPORAN DETAIL */
+  .laporan-accordion { border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); overflow:hidden; margin-bottom:8px; }
+  .laporan-header { display:flex; align-items:center; gap:10px; padding:12px 14px; cursor:pointer; background:var(--white); }
+  .laporan-header:hover { background:var(--gray-50); }
+  .laporan-header-icon { font-size:18px; }
+  .laporan-header-info { flex:1; }
+  .laporan-header-title { font-size:13px; font-weight:700; color:var(--navy); }
+  .laporan-header-meta { font-size:11px; color:var(--gray-400); margin-top:2px; }
+  .laporan-toggle { font-size:12px; color:var(--gray-400); transition:transform 0.2s; }
+  .laporan-toggle.open { transform:rotate(180deg); }
+  .laporan-body { display:none; padding:14px; background:var(--gray-50); border-top:1px solid var(--gray-200); }
+  .laporan-body.open { display:block; }
+  .kegiatan-tag { display:inline-block; background:var(--white); border:1px solid var(--gray-200); border-radius:6px; padding:4px 10px; font-size:12px; color:var(--gray-700); margin:3px 3px 3px 0; }
+  .foto-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:10px; }
+  .foto-grid img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; border:1px solid var(--gray-200); }
+
+  /* BUTTONS */
+  .btn-refresh { width:100%; padding:12px; border-radius:var(--radius-sm); border:1.5px solid var(--gray-200); background:var(--white); color:var(--navy); font-size:13px; font-weight:600; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .btn-compile { width:100%; padding:16px; border-radius:var(--radius-sm); border:none; background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%); color:var(--white); font-size:15px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(13,27,62,0.3); margin-top:12px; }
+  .btn-compile:disabled { background:#ccc; box-shadow:none; cursor:not-allowed; }
+  .btn-compile:active { transform:scale(0.98); }
+  .btn-send { width:100%; padding:16px; border-radius:var(--radius-sm); border:none; background:linear-gradient(135deg,var(--green) 0%,#059669 100%); color:var(--white); font-size:15px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(16,185,129,0.35); margin-top:8px; }
+
+  /* FORM */
+  label { display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:6px; letter-spacing:0.3px; text-transform:uppercase; }
+  input[type="date"], textarea { width:100%; padding:12px 14px; border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:var(--gray-800); background:var(--gray-50); outline:none; }
+  input[type="date"]:focus, textarea:focus { border-color:var(--navy-mid); background:var(--white); }
+  textarea { resize:none; min-height:80px; line-height:1.5; }
+  .form-group { margin-bottom:14px; }
+
+  .info-box { background:rgba(27,58,107,0.06); border-left:3px solid var(--navy-mid); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:10px 14px; font-size:12px; color:var(--navy-mid); margin-bottom:14px; line-height:1.5; }
+  .warning-box { background:rgba(245,158,11,0.08); border-left:3px solid var(--orange); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:10px 14px; font-size:12px; color:#92400E; margin-bottom:14px; line-height:1.5; }
+
+  .loading-overlay { display:none; position:fixed; inset:0; background:rgba(13,27,62,0.7); z-index:999; align-items:center; justify-content:center; flex-direction:column; gap:16px; backdrop-filter:blur(4px); }
+  .loading-overlay.show { display:flex; }
+  .spinner { width:48px; height:48px; border:4px solid rgba(255,255,255,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .loading-text { color:var(--white); font-size:14px; font-weight:600; }
+
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--gray-800); color:var(--white); padding:12px 20px; border-radius:999px; font-size:13px; font-weight:500; transition:transform 0.3s ease; z-index:1000; white-space:nowrap; max-width:90vw; text-align:center; }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+  .toast.error { background:var(--red); }
+  .toast.success { background:var(--green); }
+
+  .empty-state { text-align:center; padding:30px 20px; color:var(--gray-400); }
+  .empty-state .empty-icon { font-size:40px; margin-bottom:10px; }
+  .empty-state p { font-size:13px; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="header-top">
+    <div class="header-logo">🖥️</div>
+    <div class="header-title">
+      <h1>Dashboard Host</h1>
+      <p>Monitor & Kompilasi Laporan Harian</p>
+    </div>
+    <div class="header-badge">HOST</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- FILTER TANGGAL -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon navy">📅</div>
+      <div class="card-title">
+        <h2>Pilih Tanggal</h2>
+        <p>Monitor laporan masuk hari ini</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Tanggal Laporan</label>
+      <input type="date" id="filter-tanggal">
+    </div>
+    <button class="btn-refresh" onclick="loadLaporan()">🔄 Muat Laporan</button>
+  </div>
+
+  <!-- STATUS UNIT -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon gold">📊</div>
+      <div class="card-title">
+        <h2>Status Pengiriman</h2>
+        <p id="status-subtitle">Memuat data...</p>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="progress-label">
+      <span>Progress</span>
+      <span id="progress-text">0 / 6 unit</span>
+    </div>
+
+    <div class="status-grid" id="status-grid" style="margin-top:14px">
+      <!-- Diisi oleh JS -->
+    </div>
+  </div>
+
+  <!-- LAPORAN MASUK -->
+  <div class="card" id="laporan-card" style="display:none">
+    <div class="card-header">
+      <div class="card-icon green">📋</div>
+      <div class="card-title">
+        <h2>Laporan Masuk</h2>
+        <p>Klik untuk lihat detail tiap unit</p>
+      </div>
+    </div>
+    <div id="laporan-list"></div>
+  </div>
+
+  <!-- KOMPILASI & KIRIM -->
+  <div class="card" id="compile-card">
+    <div class="card-header">
+      <div class="card-icon navy">🚀</div>
+      <div class="card-title">
+        <h2>Kompilasi & Kirim</h2>
+        <p>Gabungkan semua laporan unit</p>
+      </div>
+    </div>
+
+    <div id="compile-warning" class="warning-box" style="display:none">
+      ⚠️ Belum semua unit mengirim laporan. Anda masih bisa kompilasi, unit yang belum kirim akan tercatat sebagai "Stand by".
+    </div>
+
+    <div class="info-box">
+      Setelah dikompilasi, laporan gabungan akan dikirim ke Kepala Kantor dan tersimpan sebagai PDF di Google Drive.
+    </div>
+
+    <div class="form-group">
+      <label>Catatan dari Host (opsional)</label>
+      <textarea id="catatan-host" placeholder="Catatan tambahan untuk Kepala Kantor..."></textarea>
+    </div>
+
+    <button class="btn-compile" id="btn-compile" onclick="kompilasi()">
+      📄 Kompilasi Laporan
+    </button>
+  </div>
+
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">Memuat...</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby48cqdvJnU9L7GayK8Gn_jzmSwfv7WH2WrhzAyZaCDuDUsZynZ7b74t5BOs21NOfjyGg/exec";
+
+const ALL_UNITS = [
+  { id:'PKP-PK',           icon:'🚒', label:'PKP-PK',            sub:'Pencegahan & Pemadam Kebakaran' },
+  { id:'Teknisi Listrik',  icon:'⚡', label:'Teknisi Listrik',    sub:'& Elband' },
+  { id:'Teknisi Bangland', icon:'🏗️', label:'Teknisi Bangland',   sub:'Bangunan & Landasan' },
+  { id:'Teknisi A2B',      icon:'🔧', label:'Teknisi A2B',        sub:'Alat Angkut & Berat' },
+  { id:'Avsec',            icon:'🛡️', label:'Avsec',              sub:'Aviation Security' },
+  { id:'Sanitasi',         icon:'🧹', label:'Sanitasi',           sub:'Kebersihan & Sanitasi' },
+];
+
+let laporanMasuk = {}; // { unitId: { nama, waktu, kegiatan, fotos, catatan } }
+
+// ── INIT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('filter-tanggal').value = new Date().toISOString().split('T')[0];
+  renderStatusGrid({}); // render kosong dulu
+  loadLaporan();
+});
+
+// ── LOAD DATA DARI BACKEND ─────────────────────────────────────
+async function loadLaporan() {
+  const tanggal = document.getElementById('filter-tanggal').value;
+  if (!tanggal) { showToast('Pilih tanggal dulu', 'error'); return; }
+
+  showLoading('Memuat laporan...');
+
+  try {
+    const tglFormatted = new Date(tanggal + 'T00:00:00').toLocaleDateString('id-ID',
+      { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    const url = SCRIPT_URL + '?action=getLaporan&tanggal=' + encodeURIComponent(tglFormatted);
+    const resp = await fetch(url);
+    const data = await resp.json();
+
+    laporanMasuk = {};
+    if (data.laporan) {
+      data.laporan.forEach(l => { laporanMasuk[l.unit] = l; });
+    }
+
+  } catch(err) {
+    // Mode demo jika belum ada backend
+    console.log('Demo mode:', err.message);
+    laporanMasuk = {};
+  }
+
+  hideLoading();
+  renderAll();
+}
+
+// ── RENDER STATUS GRID ─────────────────────────────────────────
+function renderStatusGrid(data) {
+  const grid = document.getElementById('status-grid');
+  const doneCount = ALL_UNITS.filter(u => data[u.id]).length;
+
+  grid.innerHTML = ALL_UNITS.map(u => {
+    const laporan = data[u.id];
+    const isDone  = !!laporan;
+    return `
+      <div class="status-item ${isDone ? 'done' : 'waiting'}">
+        <div class="status-icon">${u.icon}</div>
+        <div class="status-info">
+          <div class="status-unit">${u.label}</div>
+          <div class="status-sub">${u.sub}</div>
+          ${isDone ? `<div class="status-time">⏱ ${laporan.waktu || '-'}</div>` : ''}
+        </div>
+        <div class="status-badge ${isDone ? 'done' : 'waiting'}">
+          ${isDone ? '✅ Terkirim' : '⏳ Menunggu'}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Progress
+  const pct = Math.round((doneCount / ALL_UNITS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${doneCount} / ${ALL_UNITS.length} unit`;
+  document.getElementById('status-subtitle').textContent =
+    doneCount === ALL_UNITS.length ? '✅ Semua unit sudah lapor!' :
+    doneCount === 0 ? 'Menunggu laporan dari semua unit...' :
+    `${ALL_UNITS.length - doneCount} unit belum lapor`;
+}
+
+// ── RENDER LAPORAN MASUK ───────────────────────────────────────
+function renderLaporanList(data) {
+  const list = document.getElementById('laporan-list');
+  const units = ALL_UNITS.filter(u => data[u.id]);
+
+  if (units.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <p>Belum ada laporan masuk untuk tanggal ini.</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = units.map((u, i) => {
+    const l = data[u.id];
+    const kegiatan = Array.isArray(l.kegiatan) ? l.kegiatan : [l.kegiatan];
+    const fotos = l.fotos || [];
+    return `
+      <div class="laporan-accordion">
+        <div class="laporan-header" onclick="toggleAccordion(${i})">
+          <div class="laporan-header-icon">${u.icon}</div>
+          <div class="laporan-header-info">
+            <div class="laporan-header-title">${u.label}</div>
+            <div class="laporan-header-meta">👤 ${l.nama} · 📸 ${fotos.length} foto · ${kegiatan.length} kegiatan</div>
+          </div>
+          <div class="laporan-toggle" id="toggle-${i}">▼</div>
+        </div>
+        <div class="laporan-body" id="body-${i}">
+          <div style="margin-bottom:10px">
+            ${kegiatan.map(k => `<span class="kegiatan-tag">• ${k}</span>`).join('')}
+          </div>
+          ${l.catatan ? `<div style="font-size:12px;color:var(--gray-600);margin-bottom:8px"><strong>Catatan:</strong> ${l.catatan}</div>` : ''}
+          ${fotos.length > 0 ? `
+            <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:6px">FOTO DOKUMENTASI</div>
+            <div class="foto-grid">
+              ${fotos.slice(0,6).map(f => `<img src="${f}" onclick="viewFoto('${f}')">`).join('')}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleAccordion(i) {
+  const body   = document.getElementById(`body-${i}`);
+  const toggle = document.getElementById(`toggle-${i}`);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+}
+
+function viewFoto(src) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = `<img src="${src}" style="max-width:100%;max-height:100%;border-radius:8px;object-fit:contain;">`;
+  overlay.onclick = () => document.body.removeChild(overlay);
+  document.body.appendChild(overlay);
+}
+
+// ── RENDER ALL ─────────────────────────────────────────────────
+function renderAll() {
+  renderStatusGrid(laporanMasuk);
+  renderLaporanList(laporanMasuk);
+
+  const doneCount = ALL_UNITS.filter(u => laporanMasuk[u.id]).length;
+  document.getElementById('laporan-card').style.display = doneCount > 0 ? 'block' : 'none';
+
+  // Warning jika belum semua unit lapor
+  document.getElementById('compile-warning').style.display =
+    doneCount > 0 && doneCount < ALL_UNITS.length ? 'block' : 'none';
+}
+
+// ── KOMPILASI ──────────────────────────────────────────────────
+async function kompilasi() {
+  const tanggal = document.getElementById('filter-tanggal').value;
+  const catatanHost = document.getElementById('catatan-host').value.trim();
+
+  if (!tanggal) { showToast('Pilih tanggal dulu', 'error'); return; }
+
+  const doneCount = ALL_UNITS.filter(u => laporanMasuk[u.id]).length;
+  if (doneCount === 0) { showToast('Belum ada laporan yang masuk!', 'error'); return; }
+
+  const tglFormatted = new Date(tanggal + 'T00:00:00').toLocaleDateString('id-ID',
+    { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  // Siapkan data kompilasi
+  const kompilData = {
+    type: 'kompilasi',
+    tanggal: tglFormatted,
+    catatanHost,
+    laporan: {},
+  };
+
+  ALL_UNITS.forEach(u => {
+    kompilData.laporan[u.id] = laporanMasuk[u.id] || {
+      unit: u.id, nama: '-', kegiatan: ['Stand by'], fotos: [], catatan: ''
+    };
+  });
+
+  showLoading('Mengkompilasi & mengirim laporan...');
+
+  try {
+    if (!SCRIPT_URL.includes('GANTI')) {
+      await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify(kompilData) });
+    } else {
+      await new Promise(r => setTimeout(r, 2500));
+    }
+
+    hideLoading();
+    showToast('✅ Laporan berhasil dikompilasi & dikirim!', 'success');
+
+    // Update UI
+    document.getElementById('btn-compile').textContent = '✅ Sudah Dikompilasi';
+    document.getElementById('btn-compile').disabled = true;
+
+  } catch(err) {
+    hideLoading();
+    showToast('Gagal: ' + err.message, 'error');
+  }
+}
+
+// ── HELPERS ────────────────────────────────────────────────────
+function showLoading(text) {
+  document.getElementById('loadingText').textContent = text;
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+let toastTimer;
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
