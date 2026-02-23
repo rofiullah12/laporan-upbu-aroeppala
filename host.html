@@ -264,11 +264,14 @@ async function loadLaporan() {
   showLoading('Memuat laporan...');
 
   try {
-    const tglFormatted = new Date(tanggal + 'T00:00:00').toLocaleDateString('id-ID',
-      { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    const d = new Date(tanggal + 'T00:00:00');
+    const dd = String(d.getDate()).padStart(2,'0');
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const tglShort = dd + '/' + mm + '/' + d.getFullYear();
+    const tglFormatted = d.toLocaleDateString('id-ID',{ weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
     // Gunakan JSONP untuk bypass CORS
-    const data = await fetchJSONP(SCRIPT_URL + '?action=getLaporan&tanggal=' + encodeURIComponent(tglFormatted));
+    const data = await fetchJSONP(SCRIPT_URL + '?action=getLaporan&tanggal=' + encodeURIComponent(tglShort));
 
     laporanMasuk = {};
     if (data.laporan) {
